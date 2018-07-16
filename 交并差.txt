@@ -1,0 +1,23 @@
+并集：
+
+select  distinct processid,taskid from bigdatainput_data union all select distinct processid,taskid from
+bigdataprocess_config;
+
+
+交集：
+
+select processid,taskid from (
+
+select distinct a.processid,a.taskid from bigdataprocess_config a union all 
+select distinct b.processid,b.taskid from bigdatainput_data b) c group by processid,taskid 
+having count(*)=2
+
+差集:
+
+select name,age from (
+
+select name,age from ( select distinct a.name,a.age from student a union all select 
+
+b.name,b.age from people b) t_temp group by name,age having count(*)=1  union all
+
+select distinct c.name,c.age from student c) d group by name,age having count(*)=2
